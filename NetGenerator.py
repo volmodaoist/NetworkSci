@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 
 from Graph import Graph
 
+from config import *
+
 """
 创建一个类,能够生成以下三种网络;
     1. 随机网络
@@ -13,7 +15,7 @@ from Graph import Graph
 """
         
 class NetGenerator:
-    def __init__(self, seed = None) -> None:
+    def __init__(self, seed = INIT_SEED) -> None:
         self.seed = seed
         self.show = True
         self.curr_network = None
@@ -45,7 +47,7 @@ class NetGenerator:
         """
         rg = nx.generators.random_regular_graph(degree, nodes, seed = self.seed)
         ps = nx.drawing.layout.spring_layout(rg, seed = self.seed)
-        self.curr_network = Graph(rg)
+        self.curr_network = Graph(rg, seed = self.seed)
         if self.show == True:
             nx.draw(rg, ps, with_labels = with_labels)
             plt.show()
@@ -59,7 +61,7 @@ class NetGenerator:
         """
         ws = nx.generators.watts_strogatz_graph(nodes, degree, prob_rewire, seed = self.seed)
         ps = nx.drawing.layout.spring_layout(ws, seed = self.seed)
-        self.curr_network = Graph(ws)
+        self.curr_network = Graph(ws, seed = self.seed)
         if self.show == True:
             nx.draw(ws, ps, with_labels = with_labels)
             plt.show()
@@ -73,7 +75,7 @@ class NetGenerator:
         """
         er = nx.generators.erdos_renyi_graph(nodes, prob_connect, seed = self.seed)
         ps = nx.drawing.layout.spring_layout(er, seed = self.seed)
-        self.curr_network = Graph(er)
+        self.curr_network = Graph(er, seed = self.seed)
         if self.show == True:
             nx.draw(er, ps, with_labels = with_labels)
             plt.show()
@@ -87,7 +89,7 @@ class NetGenerator:
         """
         ba = nx.generators.barabasi_albert_graph(nodes, new_growing_edges, seed = self.seed)
         ps = nx.drawing.layout.spring_layout(ba, seed = self.seed)
-        self.curr_network = Graph(ba)
+        self.curr_network = Graph(ba, seed = self.seed)
         if self.show == True:
             nx.draw(ba, ps, with_labels = with_labels)
             plt.show()
@@ -99,7 +101,7 @@ class NetGenerator:
     
     # 获取当前图结构列表
     def get_curr_netlist(self):
-        return self.curr_netlist[:], self.seed
+        return self.curr_netlist[:]
 
     def netlist_push(self, network = None):
         if network != None:

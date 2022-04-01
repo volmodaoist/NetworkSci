@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -22,13 +21,14 @@ if __name__ == '__main__':
     ng.new_BANet(100, 1)
     ng.netlist_push()
 
-
-    plt.figure(figsize = (16, 16))    
-    net_list, seed = ng.get_curr_netlist()
+    net_list = ng.get_curr_netlist()
 
     tg = Graph(net_list[0])
-    print(tg.average_clustering())
-    tg.hist_degree()
+    # tg.bar_degree()
+    # tg.bar_clustering()
+    # tg.bar_betweeness()
+    tg.get_static_prop()
+    # tg.plot()
 
     # for i,g in enumerate(net_list):
     #     plt.subplot(2, 2, i + 1)
