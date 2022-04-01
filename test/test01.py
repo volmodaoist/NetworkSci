@@ -1,8 +1,13 @@
+import sys
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 
+sys.path.append("./")
+sys.path.append("../")
+
+from config import *
 from NetGenerator import *
+
 
 if __name__ == '__main__':
     ng = NetGenerator(0)
@@ -24,16 +29,17 @@ if __name__ == '__main__':
     net_list = ng.get_curr_netlist()
 
     tg = Graph(net_list[0])
-    # tg.bar_degree()
-    # tg.bar_clustering()
-    # tg.bar_betweeness()
+    tg.plot()
+    tg.bar_degree()
+    tg.bar_clustering()
+    tg.bar_betweeness()
     tg.get_static_prop()
-    # tg.plot()
 
-    # for i,g in enumerate(net_list):
-    #     plt.subplot(2, 2, i + 1)
-    #     ps = nx.drawing.layout.spring_layout(g, seed = seed)
-    #     nx.draw(g, ps, with_labels = True)
-    #     plt.axis('on')
-    #     plt.title(str(g))
-    # plt.show()
+    plt.figure(figsize = (16,16))
+    for i,g in enumerate(net_list):
+        plt.subplot(2, 2, i + 1)
+        ps = nx.drawing.layout.spring_layout(g, seed = INIT_SEED)
+        nx.draw(g, ps, with_labels = True)
+        plt.axis('on')
+        plt.title(str(g))
+    plt.show()
