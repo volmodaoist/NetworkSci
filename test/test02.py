@@ -10,10 +10,12 @@ from config import *
 from NetGenerator import *
 from mpl_toolkits.mplot3d import Axes3D 
 
+
+
+## 测试每条连边的测试并且采用三维散点图可视化
 if __name__ == "__main__":
     ng = NetGenerator(0)
     ng.flip()
-
 
     ## 测试数据
     ####################################

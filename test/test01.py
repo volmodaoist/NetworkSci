@@ -8,7 +8,7 @@ sys.path.append("../")
 from config import *
 from NetGenerator import *
 
-
+## 测试构建四种不同类型拓扑图
 if __name__ == '__main__':
     ng = NetGenerator(0)
     ng.flip()

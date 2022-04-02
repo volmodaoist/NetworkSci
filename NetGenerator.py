@@ -1,8 +1,8 @@
+import random
 import networkx as nx
 import matplotlib.pyplot as plt
 
 from Graph import Graph
-
 from config import *
 
 """
@@ -94,6 +94,48 @@ class NetGenerator:
             nx.draw(ba, ps, with_labels = with_labels)
             plt.show()
         return ba
+
+    def new_nn(self, layer_sizes, left = 0.1, right = 0.9, bottom = 0.1, top = 0.9, rc = True):
+        g = nx.Graph()
+        v_spacing = (top - bottom) / float(max(layer_sizes))
+        h_spacing = (right - left) / float(len(layer_sizes) - 1)
+        node_count = 0
+        for i, v in enumerate(layer_sizes):
+            layer_top = v_spacing*(v-1)/2. + (top + bottom)/2.
+            for j in range(v):
+                g.add_node(node_count, pos=(left + i*h_spacing, layer_top - j*v_spacing))
+                node_count += 1
+        for x, (left_nodes, right_nodes) in enumerate(zip(layer_sizes[:-1], layer_sizes[1:])):
+            for i in range(left_nodes):
+                for j in range(right_nodes):
+                    g.add_edge(i + sum(layer_sizes[:x]), j + sum(layer_sizes[:x+1]))    
+
+        if self.show == True:
+            ps = nx.get_node_attributes(g,'pos')
+            if rc == True:
+                """
+                  1. True: 设置连边的颜色随机分布
+                  2. Fasle: 设置连边的颜色全部同色
+                """
+                edges_color = [random.random() for i in range(len(g.edges))]
+                edge_cmap = plt.cm.Blues
+            else:
+                edges_color = [255 for i in range(len(g.edges))]
+                edge_cmap = plt.cm.CMRmap
+
+            nx.draw(g, ps, 
+                    node_color = range(node_count), 
+                    with_labels = True,
+                    node_size = 200, 
+                    edge_color = edges_color, 
+                    width = 3, 
+                    cmap = plt.cm.Dark2, 
+                    edge_cmap = edge_cmap
+            )
+            plt.axis('on')
+            plt.title("Dense Connected Neural Network")
+            plt.show()
+        return g
 
     # 获取当前图结构
     def get_curr_network(self):

@@ -1,5 +1,4 @@
 import sys
-from matplotlib import projections
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -8,12 +7,13 @@ sys.path.append("../")
 
 from config import *
 from NetGenerator import *
-from mpl_toolkits.mplot3d import Axes3D 
 
+
+
+## 测试中心性, 集聚系数, 度分布等属性
 if __name__ == "__main__":
     ng = NetGenerator(0)
     ng.flip()
-
 
     ## 测试数据
     ####################################
