@@ -46,9 +46,9 @@ class NetGenerator:
         @pram degree : 每个节点的度值 
         """
         rg = nx.generators.random_regular_graph(degree, nodes, seed = self.seed)
-        ps = nx.drawing.layout.spring_layout(rg, seed = self.seed)
         self.curr_network = Graph(rg, seed = self.seed)
         if self.show == True:
+            ps = nx.drawing.layout.spring_layout(rg, seed = self.seed)
             nx.draw(rg, ps, with_labels = with_labels)
             plt.show()
         return rg
@@ -60,9 +60,9 @@ class NetGenerator:
         @pram prob_rewire :  
         """
         ws = nx.generators.watts_strogatz_graph(nodes, degree, prob_rewire, seed = self.seed)
-        ps = nx.drawing.layout.spring_layout(ws, seed = self.seed)
         self.curr_network = Graph(ws, seed = self.seed)
         if self.show == True:
+            ps = nx.drawing.layout.spring_layout(ws, seed = self.seed)
             nx.draw(ws, ps, with_labels = with_labels)
             plt.show()
         return ws
@@ -74,9 +74,9 @@ class NetGenerator:
         @pram prob_connect : 网络连接概率
         """
         er = nx.generators.erdos_renyi_graph(nodes, prob_connect, seed = self.seed)
-        ps = nx.drawing.layout.spring_layout(er, seed = self.seed)
         self.curr_network = Graph(er, seed = self.seed)
         if self.show == True:
+            ps = nx.drawing.layout.spring_layout(er, seed = self.seed)
             nx.draw(er, ps, with_labels = with_labels)
             plt.show()
         return er
@@ -88,9 +88,9 @@ class NetGenerator:
         @pram new_growing_edges : 新增节点需要与已有节点们生成的连边数量
         """
         ba = nx.generators.barabasi_albert_graph(nodes, new_growing_edges, seed = self.seed)
-        ps = nx.drawing.layout.spring_layout(ba, seed = self.seed)
         self.curr_network = Graph(ba, seed = self.seed)
         if self.show == True:
+            ps = nx.drawing.layout.spring_layout(ba, seed = self.seed)
             nx.draw(ba, ps, with_labels = with_labels)
             plt.show()
         return ba

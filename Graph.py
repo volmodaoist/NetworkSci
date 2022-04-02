@@ -1,4 +1,3 @@
-from turtle import color
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -17,12 +16,18 @@ class Graph(nx.classes.graph.Graph):
     def __init__(self, incoming_graph_data = None, seed = INIT_SEED, **attr):
         super().__init__(incoming_graph_data, **attr)
         self.seed = seed
+        self.show = True
+
+    def flip(self):
+        self.show = self.show ^ True
 
     # 绘制图结构本身
-    def plot(self, with_labels = True):
+    def plot_graph(self, with_labels = True):
         ps = nx.drawing.layout.spring_layout(self, seed = self.seed)
         nx.draw(self, ps, with_labels = with_labels)
-        plt.show()
+        if self.show == True:
+            plt.show()
+        return self
 
     # 获取平均度
     def get_average_degree(self):
@@ -51,39 +56,56 @@ class Graph(nx.classes.graph.Graph):
 
 
     # 通过柱状图展示度分布
-    def bar_degree(self):
+    def plot_degree(self):
         node_x_degree = self.degree()
         node, degree = zip(*node_x_degree)
-        plt.xlabel("Ordered Node Number")
-        plt.ylabel("Node degree")
-        plt.bar(node, degree)
-        plt.show()
+        if self.show == True:
+            plt.xlabel("Ordered Node Number")
+            plt.ylabel("Node degree")
+            plt.bar(node, degree)
+            plt.show()
+        return node, degree
 
     # 通过柱状图展示集聚系数
-    def bar_clustering(self):
+    def plot_clustering(self):
         node_x_clustering = nx.clustering(self)
         node, clustering = zip(*node_x_clustering.items())
-        plt.xlabel("Ordered Node Number")
-        plt.ylabel("Clustering")
-        plt.bar(node, clustering)
-        plt.show()
+        if self.show == True:
+            plt.xlabel("Ordered Node Number")
+            plt.ylabel("Clustering")
+            plt.bar(node, clustering)
+            plt.show()
+        return node, clustering
 
     # 通过柱状图展示介数
-    def bar_betweeness(self):
+    def plot_betweeness(self):
         U,V,B = self.get_edges_betweeness()
-        ax = plt.axes(projection='3d')
-        ax.scatter3D(U, V, B, c = B)
-        ax.set_xlabel("Node U")
-        ax.set_ylabel("Node V")
-        ax.set_zlabel("Betweeness")
-        ax.set_title("Betweeness of each edge")
-        plt.show()
+        if self.show == True:
+            ax = plt.axes(projection = "3d")
+            ax.scatter3D(U, V, B, c = B)
+            ax.set_xlabel("Node U")
+            ax.set_ylabel("Node V")
+            ax.set_zlabel("Betweeness")
+            ax.set_title("Betweeness of each edge")
+            plt.show()
+        return U, V, B
 
+    def plot_centrality(self):
+        node, centrality = [], []
+        for k,v in nx.degree_centrality(self).items():
+            node.append(k)
+            centrality.append(v)
+        if self.show == True:
+            plt.xlabel("Ordered Node Number")
+            plt.ylabel("Centrality")
+            plt.stem(node, centrality)
+            plt.show()
+        return node, centrality
 
     ########################################## 
     ### 获取所有静态性质, 这些性质可以分类两批: #
     ###     1. 静态节点属性                   #
-    ###     2. 静态连表属性                   #
+    ###     2. 静态连边属性                   #
     ##########################################
     def get_static_prop(self):
         print("平均度:", self.get_average_degree())

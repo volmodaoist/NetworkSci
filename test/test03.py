@@ -1,4 +1,5 @@
 import sys
+from matplotlib import projections
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -7,12 +8,13 @@ sys.path.append("../")
 
 from config import *
 from NetGenerator import *
+from mpl_toolkits.mplot3d import Axes3D 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     ng = NetGenerator(0)
     ng.flip()
-    
+
+
     ## 测试数据
     ####################################
     ng.new_ERNet(50, 0.1)
@@ -28,13 +30,19 @@ if __name__ == '__main__':
     ng.netlist_push()
     ####################################
 
+
     net_list = ng.get_curr_netlist()
-    
     plt.figure(figsize = (16,16))
-    for i,g in enumerate(net_list):
-        plt.subplot(2, 2, i + 1)
-        ps = nx.drawing.layout.spring_layout(g, seed = INIT_SEED)
-        nx.draw(g, ps, with_labels = True)
-        plt.axis('on')
-        plt.title(str(g))
-    plt.show()
+    def plot_prop(prop, plot_func):
+        for i,g in enumerate(net_list):
+            g.flip()
+            data_tuple = getattr(g, "plot_" + prop)()
+            plt.subplot(2, 2, i + 1)
+            plot_func(*(data_tuple))
+            plt.title(str(g))
+        plt.show()
+
+    # 逐个测试
+    # plot_prop("centrality", plt.stem)
+    # plot_prop("clustering", plt.bar)
+    # plot_prop("degree", plt.bar)
