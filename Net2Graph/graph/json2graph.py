@@ -75,7 +75,7 @@ def write_edge(idx, edges):
 if __name__ == "__main__":
     for i in range(1000):
         ag_json_file = "../ag/ag-{}.json".format(i) 
-        if os.path.exists(ag_json_file):
+        if os.path.exists(ag_json_file) and not os.path.exists("../in/in-{}.txt".format(i)):
             write_edge(i, print_edge(i))
 
 # 如果需要对比受到对抗攻击前后同一个类别的两个特征表达图(Attribution graph)之间的差异,
