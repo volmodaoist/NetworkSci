@@ -1,4 +1,3 @@
-## 计算两个图的相似度
 import os,sys
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -30,7 +29,7 @@ g2.plot_graph()
 ## 测试官方文档里面提供的测量相似度的所有方法
 ## https://networkx.org/documentation/stable/reference/algorithms/similarity.html
 
-# 计算编辑距离是一个NP难题
+# 通过比较编辑距离, 分析两个图的相似度, 计算编辑距离是一个NP难题
 # print("Graph edit distance: {:.2f}".format(nx.graph_edit_distance(g1,g2)))
 
 # WL hash 判定同构
