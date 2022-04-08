@@ -33,6 +33,7 @@ if __name__ == '__main__':
     plt.figure(figsize = (16,16))
     for i,g in enumerate(net_list):
         plt.subplot(2, 2, i + 1)
+        g.get_static_prop()
         ps = nx.drawing.layout.spring_layout(g, seed = INIT_SEED)
         nx.draw(g, ps, with_labels = True)
         plt.axis('on')
