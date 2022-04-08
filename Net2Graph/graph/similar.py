@@ -5,19 +5,10 @@ import matplotlib.pyplot as plt
 sys.path.append("../")
 sys.path.append("../../")
 
+from utils import *
 from config import *
 from Graph import *
 
-
-# 打开文件并建图
-def create_graph(idx):
-    g = nx.Graph()
-    with open("../in/in-{}.txt".format(idx)) as gf:
-        edges =  int(gf.readline())
-        for line in gf.readlines():
-            u,v, w = (int(e) for e in line.split(" "))
-            g.add_edge(u, v, weight = w)
-    return Graph(g)
 
 
 g1 = create_graph(0)
@@ -25,6 +16,9 @@ g2 = create_graph(1)
 
 g1.plot_graph()
 g2.plot_graph()
+
+# g1.plot_degree()
+# g2.plot_degree()
 
 ## 测试官方文档里面提供的测量相似度的所有方法
 ## https://networkx.org/documentation/stable/reference/algorithms/similarity.html
@@ -44,15 +38,19 @@ g2.plot_graph()
 # print(max(nx.degree_centrality(g1).values()))
 # print(max(nx.degree_centrality(g2).values()))
 
-def centrality(g):
+def centrality(g, isSorted = False):
     node, centrality = [], []
-    for k,v in nx.degree_centrality(g).items():
+    node_x_centrality = nx.degree_centrality(g).items()
+    for k,v in node_x_centrality:
         node.append(k)
         centrality.append(v)
-    plt.stem(node, centrality)
+    if isSorted:
+        plt.stem(sorted(centrality, reverse = True))
+    else:
+        plt.stem(node, centrality)
     plt.show()
 
 
 # 查看并对比两个图的中心性
-centrality(g1)
-centrality(g2)   
+centrality(g1, True)
+centrality(g2, True)   
