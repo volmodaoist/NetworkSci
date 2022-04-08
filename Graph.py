@@ -111,3 +111,11 @@ class Graph(nx.classes.graph.Graph):
         print("平均度:", self.get_average_degree())
         print("平均集聚系数:", self.get_average_clustering())
         print("特征路径长度:", nx.algorithms.average_shortest_path_length(self))
+        # 用于Latex制作表格
+        # print(" && {:.3f} && {:.3f} && {:.3f}  \\\\"\
+        #         .format(
+        #             self.get_average_degree(), 
+        #             self.get_average_clustering(),
+        #             nx.algorithms.average_shortest_path_length(self) 
+        #         )
+        #     )
